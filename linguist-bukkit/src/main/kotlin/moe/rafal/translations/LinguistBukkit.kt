@@ -1,5 +1,7 @@
 package moe.rafal.translations
 
+import moe.rafal.translations.audience.AudienceProvider
+import moe.rafal.translations.audience.BukkitAudienceProvider
 import moe.rafal.translations.key.MessageKeyParser
 import moe.rafal.translations.key.StringMessageKeyParser
 import moe.rafal.translations.placeholder.PlaceholderParser
@@ -8,6 +10,7 @@ import moe.rafal.translations.repository.FileTranslationRepository
 import moe.rafal.translations.repository.TranslationRepository
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
+import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import pl.auroramc.lobby.file.FileUtils
 import java.nio.file.Path
@@ -15,9 +18,10 @@ import java.util.function.Function
 
 class LinguistBukkit(translationRepository: TranslationRepository,
                      placeholderParser: PlaceholderParser = StringPlaceholderParser(),
+                     audienceProvider: AudienceProvider<Player> = BukkitAudienceProvider(),
                      messageKeyParser: MessageKeyParser = StringMessageKeyParser(),
                      messageMapper: Function<String, Component> = Function { message -> MiniMessage.miniMessage().deserialize(message) }):
-    Linguist<Component>(translationRepository, placeholderParser, messageKeyParser, messageMapper) {
+    Linguist<Component, Player>(translationRepository, placeholderParser, audienceProvider, messageKeyParser, messageMapper) {
 
         companion object {
 
