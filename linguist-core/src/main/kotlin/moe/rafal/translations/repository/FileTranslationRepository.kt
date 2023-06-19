@@ -21,6 +21,10 @@ class FileTranslationRepository(private val bundleKey: String, private val trans
         return translations[locale]?.getString(key.key)
     }
 
+    override fun supportedLocales(): List<Locale> {
+        return translations.keys.toList()
+    }
+
     fun parseTranslations() {
         searchForTranslationPaths()
             .map { translationPath -> parseTranslation(translationPath) }

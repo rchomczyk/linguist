@@ -9,14 +9,20 @@ import moe.rafal.translations.placeholder.Placeholder
 import moe.rafal.translations.placeholder.PlaceholderParser
 import moe.rafal.translations.placeholder.StringPlaceholderParser
 import moe.rafal.translations.repository.TranslationRepository
+import java.util.Locale
 import java.util.function.Function
 
 open class Linguist<T, S>(
-    translationRepository: TranslationRepository, placeholderParser: PlaceholderParser = StringPlaceholderParser(),
+    private val translationRepository: TranslationRepository,
+    placeholderParser: PlaceholderParser = StringPlaceholderParser(),
     private val audienceProvider: AudienceProvider<S>,
     private val messageKeyParser: MessageKeyParser = StringMessageKeyParser(),
     private val messageMapper: Function<String, T>) {
     private val messageWriter = MessageWriterImpl(translationRepository, placeholderParser)
+
+    fun supportedLocales(): List<Locale> {
+        return translationRepository.supportedLocales()
+    }
 
     fun translate(viewer: S, messageKey: String, vararg placeholders: Placeholder): T {
         return translate(viewer, messageKeyParser.parse(messageKey)!!, *placeholders)
