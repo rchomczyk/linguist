@@ -5,14 +5,14 @@ import dev.rollczi.litecommands.handle.Handler
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import moe.rafal.translations.LinguistBukkit
-import moe.rafal.translations.audience.BukkitAudience
-import moe.rafal.translations.audience.BukkitAudienceProvider
+import moe.rafal.translations.audience.Audience
+import moe.rafal.translations.audience.AudienceProvider
 import moe.rafal.translations.definition.TranslationDefinition
 
 class LiteTranslatableMessageHandler(
     private val linguist: LinguistBukkit,
-    private val audienceConsole: BukkitAudience,
-    private val audienceProvider: BukkitAudienceProvider
+    private val audienceConsole: Audience,
+    private val audienceProvider: AudienceProvider<Player>
 ): Handler<CommandSender, LiteTranslatableMessage> {
 
     override fun handle(sender: CommandSender, invocation: LiteInvocation, message: LiteTranslatableMessage) {
