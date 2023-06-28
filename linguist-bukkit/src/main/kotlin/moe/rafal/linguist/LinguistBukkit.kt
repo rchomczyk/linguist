@@ -1,7 +1,5 @@
 package moe.rafal.linguist
 
-import moe.rafal.linguist.audience.AudienceProvider
-import moe.rafal.linguist.audience.BukkitAudienceProvider
 import moe.rafal.linguist.key.MessageKeyParser
 import moe.rafal.linguist.key.StringMessageKeyParser
 import moe.rafal.linguist.placeholder.PlaceholderParser
@@ -18,10 +16,9 @@ import java.util.function.Function
 
 class LinguistBukkit(translationRepository: TranslationRepository,
                      placeholderParser: PlaceholderParser = StringPlaceholderParser(),
-                     audienceProvider: AudienceProvider<Player> = BukkitAudienceProvider(),
                      messageKeyParser: MessageKeyParser = StringMessageKeyParser(),
                      messageMapper: Function<String, Component> = Function { message -> MiniMessage.miniMessage().deserialize(message) }):
-    Linguist<Component, Player>(translationRepository, placeholderParser, audienceProvider, messageKeyParser, messageMapper) {
+    Linguist<Component, Player>(translationRepository, placeholderParser, messageKeyParser, messageMapper) {
 
         companion object {
 

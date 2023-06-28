@@ -1,6 +1,5 @@
 package moe.rafal.linguist
 
-import moe.rafal.linguist.audience.AudienceProvider
 import moe.rafal.linguist.definition.TranslationDefinition
 import moe.rafal.linguist.key.MessageKey
 import moe.rafal.linguist.key.MessageKeyParser
@@ -15,7 +14,6 @@ import java.util.function.Function
 open class Linguist<T, S>(
     private val translationRepository: TranslationRepository,
     placeholderParser: PlaceholderParser = StringPlaceholderParser(),
-    private val audienceProvider: AudienceProvider<S>,
     private val messageKeyParser: MessageKeyParser = StringMessageKeyParser(),
     private val messageMapper: Function<String, T>) {
     private val messageWriter = MessageWriterImpl(translationRepository, placeholderParser)
@@ -24,12 +22,12 @@ open class Linguist<T, S>(
         return translationRepository.supportedLocales()
     }
 
-    fun translate(viewer: S, messageKey: String, vararg placeholders: Placeholder): T {
-        return translate(viewer, messageKeyParser.parse(messageKey)!!, *placeholders)
+    fun translate(target: Locale, messageKey: String, vararg placeholders: Placeholder): T {
+        return translate(target, messageKeyParser.parse(messageKey)!!, *placeholders)
     }
 
-    fun translate(viewer: S, messageKey: MessageKey, vararg placeholders: Placeholder): T {
-        return translate(TranslationDefinition(audienceProvider.getAudience(viewer), messageKey, placeholders.toList()))
+    fun translate(target: Locale, messageKey: MessageKey, vararg placeholders: Placeholder): T {
+        return translate(TranslationDefinition(target, messageKey, placeholders.toList()))
     }
 
     fun translate(definition: TranslationDefinition): T {

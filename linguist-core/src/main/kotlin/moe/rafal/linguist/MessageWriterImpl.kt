@@ -8,7 +8,7 @@ class MessageWriterImpl(private val translationRepository: TranslationRepository
     MessageWriter {
 
     override fun write(definition: TranslationDefinition): String {
-        var message = translationRepository.translation(definition.audience.locale(), definition.key) ?: definition.key.token()
+        var message = translationRepository.translation(definition.target, definition.key) ?: definition.key.token()
             message = placeholderParser.parse(message, *definition.placeholders.toTypedArray())
         return message
     }
