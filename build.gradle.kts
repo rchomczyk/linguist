@@ -65,7 +65,7 @@ subprojects {
     }
 
     dependencies {
-        testImplementation("org.awaitility:awaitility:4.2.0")
+        testImplementation("org.awaitility:awaitility:4.2.1")
         testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
         testImplementation(kotlin("test"))
     }
